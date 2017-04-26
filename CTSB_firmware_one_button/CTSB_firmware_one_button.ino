@@ -1,10 +1,10 @@
 // For one 12 position rotary switch and 
 // one button
-int button = 2;
-int switches = {
-  3, 4, 5, 6, 
+int button = A0;
+int switches[] = {
+  2, 3, 4, 5, 6, 
   7, 8, 9, 10, 
-  11, 12, 13, A0};
+  11, 12, 13};
 int led = 13;
 int state = 0;
 int button_value;
@@ -22,19 +22,20 @@ void setup(){
   digitalWrite(led, LOW);
 }
 
-void readButtons(){
+void readRotarySwitch(){
   for (int i = 0; i < 12; i++){
     if (digitalRead(switches[i]) == HIGH) {
       if (state != i) {
-        Serial.write(i);
+        Serial.print(i);
         state = i;  
       }
     }
   }
+  Serial.println();
 }
 
 void loop(){
-  readButtons();
+  readRotarySwitch();
   delay(50);
 }
 
