@@ -1,53 +1,34 @@
-
 void readArduinoButtons() {
-  if (arduinoPort.available() > 0) {
-    val = arduinoPort.read();    
-    println("reading in : ", val);
-    if (int(val) == 0) {
-      increaseFrameRate();
-      println("b1 : increaseing 'frame rate'");
-    }
-    if (int(val) == 1) {
-      // new maps
-      println("b1 : making new maps");
+  if (arduino_port.available() > 0) {
+    val = arduino_port.read();    
+    println("reading in : ", int(val));
+    if (int(val) < 12) {
+      map_mode = int(val);
       newMaps();
+    } 
+    if (int(val) == 16) {
+      print("button press : ");
+      // 20% of the time change color_separated to none
+      if (random(100)  < 20) {
+        color_separated = false;
+        newMaps();
+      } else {
+        color_separated = true;
+        newMaps();
+      }
+      // also 10% of the time the button is pressed the image
+      // should be tweeted
+      if (random(100) < 10){
+        println("WOULD HAVE TWEETED"); 
+        //saveScreenShot();
+      }
     }
-    if (int(val) == 2) {
-      println("b2 : button does nothing");
+    while (arduino_port.available() > 0) {
+      arduino_port.read();
     }
-    if (int(val) == 3) {
-      // generate new maps
-      println("b3 : new map mode");
-      newMapMode();
-    }
-    if (int(val) == 4) {
-      println("b4 : changed difference");
-      changeDifference();
-    }
-    if (int(val) == 5) {
-      // color seperation
-      println("b5 : color separation");
-      flipColorSeparation();
-    }
-    if (int(val) == 6) {
-      // tweet
-      println("b6 : tweeting");
-      saveScreenShot();
-    }
-  }
-  while (arduinoPort.available() > 0){
-   println("flushing : ", arduinoPort.read());
   }
 }
 
-void newMapMode() {
-  // go to the next mapModes
-  mapMode++;
-  if (mapMode >= numMapModes) {
-    mapMode = 0;
-  }
-  newMaps();
-}
 
 void flipColorSeparation() {
   color_separated = !color_separated;
@@ -82,7 +63,12 @@ void keyPressed() {
     newMaps();
   }
   if (key == 'm') {
-    newMapMode();
+    // go to the next mapModes
+    map_mode++;
+    if (map_mode >= num_map_modes) {
+      map_mode = 0;
+    }
+    newMaps();
   }
   if (key == 't') {
     saveScreenShot();

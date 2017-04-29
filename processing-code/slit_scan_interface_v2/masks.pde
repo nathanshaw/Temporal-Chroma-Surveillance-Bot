@@ -1,164 +1,316 @@
-void newMaps() {
-  if (mapMode == 0) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Perlin Noise: separated");
-      red_map = makeNoiseMap();
-      green_map = makeNoiseMap();
-      blue_map = makeNoiseMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Perlin Noise: not separated");
-      green_map = blue_map = red_map = makeNoiseMap();
-    }
+void perlinNoiseMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Perlin Noise: separated");
+    red_map = makeNoiseMap();
+    green_map = makeNoiseMap();
+    blue_map = makeNoiseMap();
+  } else {
+    print("" + map_mode + " - ");
+    println("Perlin Noise: not separated");
+    green_map = blue_map = red_map = makeNoiseMap();
   }
-  if (mapMode == 1) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Vertical Maps: separated");
-      red_map = makeVertMap();
-      green_map = makeVertMap();
-      blue_map = makeVertMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Vertical Map: not separated");
-      green_map = blue_map = red_map = makeVertMap();
-    }
-  }
-  if (mapMode == 2) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Horizontal Maps: separated");
-      red_map = makeHorMap();
-      green_map = makeHorMap();
-      blue_map = makeHorMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Horizontal Maps: not separated");
-      green_map = blue_map = red_map = makeHorMap();
-    }
-  }
-  if (mapMode == 3) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Double Noise - separated");
-      red_map = makeDoubleNoiseMap();
-      green_map = makeDoubleNoiseMap();
-      blue_map = makeDoubleNoiseMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Double Noise - not separated");
-      red_map = makeDoubleNoiseMap();
-      green_map = blue_map = red_map;
-    }
-  }
-  if (mapMode == 4) {
-    if (!color_separated) {
-      print("" + mapMode + " - ");
-      println("Whisk map");
-      red_map = makeWhiskMap();
-      green_map = blue_map = red_map;
-    } else {
-      print("" + mapMode + " - ");
-      println("Whisk map");
-      red_map = makeWhiskMap();
-      blue_map = makeWhiskMap();
-      green_map = makeWhiskMap();
-    }
-  }
-  if (mapMode == 5) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Vertical/Hor Maps: separated");
-      red_map = makeVertMap();
-      green_map = makeHorMap();
-      if (random(1) < 0.5) {
-        blue_map = makeHorMap();
-      } else {
-        blue_map = makeVertMap();
-      }
-    } else {
-      print("" + mapMode + " - ");
-      println("Vertical Map: not separated");
-      green_map = blue_map = red_map = makeVertMap();
-    }
-  }
-  if (mapMode == 6) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Feedback: separated");
-      red_map = makeCurrentFrameMap();
-      green_map = makeCurrentFrameMap();
-
-      blue_map = makeCurrentFrameMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Feedback: not separated");
-      green_map = blue_map = red_map = makeCurrentFrameMap();
-    }
-  }
-  if (mapMode == 7) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Diag Maps: separated");
-      red_map = makeDiagMap();
-      green_map = makeDiagMap();
-      blue_map = makeDiagMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Diag Maps: not separated");
-      green_map = blue_map = red_map = makeDiagMap();
-    }
-  }
-  if (mapMode == 8) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Famous Maps: separated");
-      green_map = blue_map = red_map = loadMapFromFile();
-    } else {
-      print("" + mapMode + " - ");
-      println("Famous Maps: not separated");
-      green_map = blue_map = red_map = loadMapFromFile();
-    }
-  }
-  /*
-  if (mapMode == 3) {
-   if (color_separated) {
-   print("" + mapMode + " - ");
-   println("Box Masks: separated");
-   red_map = makeBoxMap();
-   green_map = makeBoxMap();
-   blue_map = makeBoxMap();
-   } else {
-   print("" + mapMode + " - ");
-   println("Box Masks: not separated");
-   green_map = blue_map = red_map = makeBoxMap();
-   }
-   }
-  if (mapMode == 4) {
-    if (color_separated) {
-      print("" + mapMode + " - ");
-      println("Circle map - separated");
-      red_map = makeCircleMap();
-      green_map = makeCircleMap();
-      blue_map = makeCircleMap();
-    } else {
-      print("" + mapMode + " - ");
-      println("Circle map - not separated");
-      red_map = makeCircleMap();
-      green_map = blue_map = red_map;
-    }
-  }
-  */
 }
 
-void changeDifference(){
- if(difference == 0) {
-    difference = 1; 
- }
- else{
-    difference = 0; 
- }
+void mostlyVerticalMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Vertical Maps: separated");
+    if (random(100) < 94) {
+      red_map = makeVertMap();
+    } else {
+      red_map = makeHorMap();
+    }
+    if (random(100) < 94) {
+      green_map = makeVertMap();
+    } else {
+      green_map = makeHorMap();
+    }
+    if (random(100) < 94) {
+      blue_map = makeVertMap();
+    } else {
+      blue_map = makeHorMap();
+    }
+  } else {
+    print("" + map_mode + " - ");
+    println("Vertical Map: not separated");
+    green_map = blue_map = red_map = makeVertMap();
+  }
+}
+
+void mostlyHorizontalMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Horizontal Maps: separated");
+    if (random(100) < 94) {    
+      red_map = makeHorMap();
+    } else {
+      red_map = makeVertMap();
+    }
+    if (random(100) < 94) {
+      green_map = makeHorMap();
+    } else {
+      green_map = makeVertMap();
+    }
+    if (random(100) < 94) {
+      blue_map = makeHorMap();
+    } else {
+      blue_map = makeVertMap();
+    }
+  } else {
+    print("" + map_mode + " - ");
+    println("Horizontal Maps: not separated");
+    green_map = blue_map = red_map = makeHorMap();
+  }
+}
+
+void mostlyDiagonalMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Diagonal Maps: separated");
+    float chance = random(100);
+    if (chance < 90) {    
+      red_map = makeDiagMap();
+    } else if (chance < 95) {
+      red_map = makeHorMap();
+    } else {
+      red_map = makeVertMap();
+    }
+    chance = random(100);
+    if (chance < 90) {
+      green_map = makeDiagMap();
+    } else if (chance < 95) {
+      green_map = makeHorMap();
+    } else {
+      green_map = makeVertMap();
+    }
+    chance = random(100);
+    if (chance < 90) {
+      blue_map = makeDiagMap();
+    } else if (chance < 95) {
+      blue_map = makeVertMap();
+    } else {
+      blue_map = makeHorMap();
+    }
+  } else {
+    print("" + map_mode + " - ");
+    println("Diagonal Maps: not separated");
+    green_map = blue_map = red_map = makeDiagMap();
+  }
+}
+
+void doublePerlinNoiseMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Double Noise - separated");
+    red_map = makeDoubleNoiseMap();
+    green_map = makeDoubleNoiseMap();
+    blue_map = makeDoubleNoiseMap();
+  } else {
+    print("" + map_mode + " - ");
+    println("Double Noise - not separated");
+    red_map = makeDoubleNoiseMap();
+    green_map = blue_map = red_map;
+  }
+}
+
+void whiskMask() {
+  if (!color_separated) {
+    print("" + map_mode + " - ");
+    println("Whisk map");
+    red_map = makeWhiskMap();
+    green_map = blue_map = red_map;
+  } else {
+    print("" + map_mode + " - ");
+    println("Whisk map");
+    red_map = makeWhiskMap();
+    blue_map = makeWhiskMap();
+    green_map = makeWhiskMap();
+  }
+}
+
+void currentFrameMasks() {
+  // TODO : space out which frames are grabbed for color separated version
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Feedback: separated");
+    red_map = makeCurrentFrameMap();
+    green_map = makeCurrentFrameMap();
+    blue_map = makeCurrentFrameMap();
+  } else {
+    print("" + map_mode + " - ");
+    println("Feedback: not separated");
+    green_map = blue_map = red_map = makeCurrentFrameMap();
+  }
+}
+
+void randomMasks() {
+  print("" + map_mode + " - ");
+  println("Random mask:");
+  float chance1 = random(90);
+  if (chance1 < 10) {
+    red_map = makeNoiseMap();
+  } else if (chance1 < 20) {
+    red_map = makeHorMap();
+  } else if (chance1 < 30) {
+    red_map = makeVertMap();
+  } else if (chance1 < 40) {
+    red_map = makeDiagMap();
+  } else if (chance1 < 50) {
+    red_map = makeWhiskMap();
+  } else if (chance1 < 60) {
+    red_map = makeDoubleNoiseMap();
+  } else if (chance1 < 70) {
+    red_map = makeBoxMap();
+  } else if (chance1 < 80) {
+    red_map = makeCircleMap();
+  } else if (chance1 < 90) {
+    red_map = loadMapFromFile();
+  }
+  chance1 = random(80);
+  if (chance1 < 10) {
+    blue_map = makeNoiseMap();
+  } else if (chance1 < 20) {
+    blue_map = makeHorMap();
+  } else if (chance1 < 30) {
+    blue_map = makeVertMap();
+  } else if (chance1 < 40) {
+    blue_map = makeDiagMap();
+  } else if (chance1 < 50) {
+    blue_map = makeWhiskMap();
+  } else if (chance1 < 60) {
+    blue_map = makeDoubleNoiseMap();
+  } else if (chance1 < 70) {
+    blue_map = makeBoxMap();
+  } else if (chance1 < 80) {
+    blue_map = makeCircleMap();
+  } else if (chance1 < 90) {
+    blue_map = loadMapFromFile();
+  }
+  chance1 = random(80);
+  if (chance1 < 10) {
+    green_map = makeNoiseMap();
+  } else if (chance1 < 20) {
+    green_map = makeHorMap();
+  } else if (chance1 < 30) {
+    green_map = makeVertMap();
+  } else if (chance1 < 40) {
+    green_map = makeDiagMap();
+  } else if (chance1 < 50) {
+    green_map = makeWhiskMap();
+  } else if (chance1 < 60) {
+    green_map = makeDoubleNoiseMap();
+  } else if (chance1 < 70) {
+    green_map = makeBoxMap();
+  } else if (chance1 < 80) {
+    green_map = makeCircleMap();
+  } else if (chance1 < 90) {
+    green_map = loadMapFromFile();
+  }
+}
+
+void fileMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Famous Maps: separated");
+    green_map = blue_map = red_map = loadMapFromFile();
+  } else {
+    print("" + map_mode + " - ");
+    println("Famous Maps: not separated");
+    green_map = blue_map = red_map = loadMapFromFile();
+  }
+}
+
+void boxMasks() {
+  // TODO : make it so the size of the boxes changes with each drawing...
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Box Masks: separated");
+    red_map = makeBoxMap();
+    green_map = makeBoxMap();
+    blue_map = makeBoxMap();
+  } else {
+    print("" + map_mode + " - ");
+    println("Box Masks: not separated");
+    green_map = blue_map = red_map = makeBoxMap();
+  }
+}
+
+void geometryMasks() {
+  if (color_separated) {
+    print("" + map_mode + " - ");
+    println("Geometry Maps: separated");
+    float chance = random(100);
+    if (chance < 33) {    
+      red_map = makeCircleMap();
+    } else if (chance < 66) {
+      red_map = makeRectangleMap();
+    } else {
+      red_map = makeTriangleMap();
+    }
+    chance = random(100);
+    if (chance < 33) {
+      green_map = makeCircleMap();
+    } else if (chance < 66) {
+      green_map = makeRectangleMap();
+    } else {
+      green_map = makeTriangleMap();
+    }
+    chance = random(100);
+    if (chance < 33) {
+      blue_map = makeCircleMap();
+    } else if (chance < 66) {
+      blue_map = makeRectangleMap();
+    } else {
+      blue_map = makeTriangleMap();
+    }
+  } else {
+    print("" + map_mode + " - ");
+    println("Geometry Masks: not separated");
+    green_map = blue_map = red_map = makeDiagMap();
+  }
+}
+
+void changingFrameMasks() {
+  // TODO : needs to be implimented
+}
+
+void newMaps() {
+  if (map_mode == 0) {
+    perlinNoiseMasks();
+  } else if (map_mode == 1) {
+    mostlyVerticalMasks();
+  } else if (map_mode == 2) {
+    mostlyHorizontalMasks();
+  } else if (map_mode == 3) {
+    doublePerlinNoiseMasks();
+  } else if (map_mode == 4) {
+    whiskMask();
+  } else if (map_mode == 5) {
+    mostlyDiagonalMasks();
+  } else if (map_mode == 6) {
+    currentFrameMasks();
+  } else if (map_mode == 7) {
+    randomMasks();
+  } else if (map_mode == 8) {
+    fileMasks();
+  } else if (map_mode == 9) {
+    boxMasks();
+  } else if (map_mode == 10) {
+    geometryMasks();
+  } else if (map_mode == 11) {
+    changingFrameMasks();
+  } else {
+    println("Map_mode ", map_mode, " not implimented");
+  }
+}
+
+void changeDifference() {
+  if (difference == 0) {
+    difference = 1;
+  } else {
+    difference = 0;
+  }
 }
 
 PImage makeCircleMap() {
@@ -221,7 +373,7 @@ PImage makeTVVisionMap() {
 }
 
 PImage makeHorMap() {
-   //create vertical gradient map
+  //create vertical gradient map
   PImage dmap = createImage(width, height, RGB);
   dmap.loadPixels();
   // 255 is max, more than 255 will leave gaps
@@ -307,10 +459,10 @@ PImage makeDoubleNoiseMap() {
   PImage nmap = makeNoiseMap();
   PImage nmap2 = makeNoiseMap();
   //PImage finalMap = nmap * nmap2;
-  for (int i =0; i < nmap.pixels.length; i++){
+  for (int i =0; i < nmap.pixels.length; i++) {
     nmap.pixels[i] = (nmap.pixels[i]|nmap2.pixels[i]);
   }
-    nmap.updatePixels();
+  nmap.updatePixels();
   return nmap;
 }
 
@@ -386,6 +538,41 @@ PImage makeBoxMap() {
       }
       int g = int((((float(bmap.width - x)/width) + (float(bmap.height - y)/height))/2 * factor3) + random(0, 1));
       r = (r*g)/255;
+      int argb = 255 << 24 | r << 16 | r << 8 | r; 
+      bmap.pixels[x + y*width] = argb;
+    }
+  }
+  bmap.updatePixels();
+  return bmap;
+}
+
+PImage makeRectangleMap() {
+  //TODO 
+  //create horizontal gradient map
+  PImage bmap = createImage(width, height, RGB);
+  bmap.loadPixels();
+  for (int x = 0; x < bmap.width; x++) {
+    for (int y = 0; y < bmap.height; y++) {
+      int g = 5;
+      int r = 10;
+      int b = 20;
+      int argb = 255 << 24 | r << 16 | r << 8 | r; 
+      bmap.pixels[x + y*width] = argb;
+    }
+  }
+  bmap.updatePixels();
+  return bmap;
+}
+
+PImage makeTriangleMap() {
+  //TODO
+  PImage bmap = createImage(width, height, RGB);
+  bmap.loadPixels();
+  for (int x = 0; x < bmap.width; x++) {
+    for (int y = 0; y < bmap.height; y++) {
+      int g = 5;
+      int r = 10;
+      int b = 20;
       int argb = 255 << 24 | r << 16 | r << 8 | r; 
       bmap.pixels[x + y*width] = argb;
     }

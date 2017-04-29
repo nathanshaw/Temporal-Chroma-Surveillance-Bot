@@ -8,18 +8,19 @@ SimpleTweet simpletweet;
 Capture cam;
 //fifo buffer for storing image frames
 // has to be a power of 2...
-int num_frames = 128;
+int num_frames = 256;
 int overfill_amount = 256/num_frames;
 PImage queue[] = new PImage[num_frames*overfill_amount];
 int queue_size = num_frames*overfill_amount;
 int write_idx = 0;
 
 // to determine which maps are active
-int mapMode = 0;
-int numMapModes = 9;
+int map_mode = 0;
+int num_map_modes = 12;
 int difference = 0;
+int screen_shot_num;
 
-Serial arduinoPort;
+Serial arduino_port;
 int val;
 
 PImage blue_map; //image for storing gradient map
@@ -31,23 +32,23 @@ boolean show_blue_map; //for displaying gradient map
 
 boolean color_separated = true;
 
-int screenShotNum;
-
 void setup() {
   size(1280, 720, P2D);
+  // get webcam rolling
   cam = new Capture(this, 1280, 720, 60);
   cam.start();
-
 
   //initialize buffer with empty images
   for (int i = 0; i < queue_size; i++) {
     queue[i] = createImage(width, height, RGB);
   }
+  // create some masks to start
   newMaps();
   frameRate(25);
+  // to find interface usually 3 for macbook without any other usb devices plugged in
   println(Serial.list());
-  String portName = Serial.list()[3];
-  arduinoPort = new Serial(this, portName, 57600);
+  String port_name = Serial.list()[3];
+  arduino_port = new Serial(this, port_name, 57600);
   simpletweet = new SimpleTweet(this);
   simpletweet.setOAuthConsumerKey("YftisSMGITwVf9zyLnfz0HRVz");
   simpletweet.setOAuthConsumerSecret("OCw264vOXl4yCVFmoisZhyxqn3ujHOUM5GapTjL22gGy4IOrcs");
@@ -56,6 +57,7 @@ void setup() {
 }
 
 void updateCam() {
+  // gets new image from webcam if available
   if (cam.available()) {
     cam.read();
     PImage cam_image = cam.get();
@@ -72,7 +74,7 @@ void draw() {
   slitscan(); //perform time displacement
   // check the buttons
   checkButtonsAndKeys();
-  surface.setTitle(str(frameRate));
+  surface.setTitle("M" + str(map_mode) + " : FR" + str(frameRate) + " OF :" + str(overfill_amount));
   readArduinoButtons();
 }
 
