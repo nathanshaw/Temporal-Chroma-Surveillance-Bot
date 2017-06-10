@@ -402,7 +402,7 @@ PImage makeHorMap() {
 }
 
 int currentImage = 0;
-int numImageMasks = 7;
+int numImageMasks = 8;
 PImage loadMapFromFile() {
   PImage fileMask = createImage(1280, 720, RGB);
   currentImage = currentImage + 1;
