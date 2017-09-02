@@ -47,7 +47,7 @@ void setup() {
   frameRate(25);
   // to find interface usually 3 for macbook without any other usb devices plugged in
   println(Serial.list());
-  String port_name = Serial.list()[3];
+  String port_name = Serial.list()[0];
   arduino_port = new Serial(this, port_name, 57600);
   simpletweet = new SimpleTweet(this);
   simpletweet.setOAuthConsumerKey("YftisSMGITwVf9zyLnfz0HRVz");
