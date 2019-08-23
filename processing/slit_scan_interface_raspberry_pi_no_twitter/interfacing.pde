@@ -1,36 +1,3 @@
-/*
-void readArduinoButtons() {
-  if (arduino_port.available() > 0) {
-    val = arduino_port.read();    
-    println("reading in : ", int(val));
-    if (int(val) < 12) {
-      map_mode = int(val);
-      newMaps();
-    } 
-    if (int(val) == 16) {
-      print("button press : ");
-      // 20% of the time change color_separated to none
-      if (random(100)  < 20) {
-        color_separated = false;
-        newMaps();
-      } else {
-        color_separated = true;
-        newMaps();
-      }
-      // also 10% of the time the button is pressed the image
-      // should be tweeted
-      if (random(100) < 10){
-        println("WOULD HAVE TWEETED"); 
-        //saveScreenShot();
-      }
-    }
-    while (arduino_port.available() > 0) {
-      arduino_port.read();
-    }
-  }
-}
-*/
-
 void flipColorSeparation() {
   color_separated = !color_separated;
   newMaps();

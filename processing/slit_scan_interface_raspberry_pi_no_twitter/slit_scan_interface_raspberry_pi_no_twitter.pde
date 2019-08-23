@@ -1,11 +1,10 @@
 // Raspberry Pi Version of the Slit Scan Code
-import processing.video.*;
+// with no twitter
+import gohai.glvideo.*;
 import processing.serial.*;
 import java.lang.ProcessBuilder;
-import gohai.simpletweet.*;
 
-SimpleTweet simpletweet;
-Capture cam;
+GLCapture cam;
 //fifo buffer for storing image frames
 // has to be a power of 2...
 int num_frames = 256;
@@ -20,7 +19,7 @@ int num_map_modes = 12;
 int difference = 0;
 int screen_shot_num;
 
-Serial arduino_port;
+// Serial arduino_port;
 int val;
 
 PImage blue_map; //image for storing gradient map
@@ -33,9 +32,9 @@ boolean show_blue_map; //for displaying gradient map
 boolean color_separated = true;
 
 void setup() {
-  size(1280, 720, P2D);
+  size(200, 200, P2D);
   // get webcam rolling
-  cam = new Capture(this, 1280, 720, 60);
+  cam = new GLCapture(this);
   cam.start();
 
   //initialize buffer with empty images
@@ -46,14 +45,6 @@ void setup() {
   newMaps();
   frameRate(25);
   // to find interface usually 3 for macbook without any other usb devices plugged in
-  println(Serial.list());
-  String port_name = Serial.list()[0];
-  arduino_port = new Serial(this, port_name, 57600);
-  simpletweet = new SimpleTweet(this);
-  simpletweet.setOAuthConsumerKey("YftisSMGITwVf9zyLnfz0HRVz");
-  simpletweet.setOAuthConsumerSecret("OCw264vOXl4yCVFmoisZhyxqn3ujHOUM5GapTjL22gGy4IOrcs");
-  simpletweet.setOAuthAccessToken("846790274500067329-l4RiS4s4JBP0xba355sXQYZj4kAPnA0");
-  simpletweet.setOAuthAccessTokenSecret("07OuQYM5pIMAuQ5o3axQ2HhixbHBPfIRsCLyEGPEs3K3u");
 }
 
 void updateCam() {
@@ -75,7 +66,6 @@ void draw() {
   // check the buttons
   checkButtonsAndKeys();
   surface.setTitle("M" + str(map_mode) + " : FR" + str(frameRate) + " OF :" + str(overfill_amount));
-  readArduinoButtons();
 }
 
 void slitscan() {

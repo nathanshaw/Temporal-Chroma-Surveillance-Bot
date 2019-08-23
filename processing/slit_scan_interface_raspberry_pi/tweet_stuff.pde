@@ -1,3 +1,4 @@
+/*
 StringList reds = new StringList("Proud to be loving Trump today!", "GOP Forever, proud to be american!");
 StringList blues = new StringList("Feel the Bern", "Proud to be a Democrat!");
 
@@ -29,3 +30,4 @@ void tweet(String msg){
   String tweet = simpletweet.tweetImage(get(), msg);
   println("Posted " + tweet);
 }
+*/
